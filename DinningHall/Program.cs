@@ -15,8 +15,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSingleton<IHostedService, TestServiceB>();
-builder.Services.AddSingleton<IHostedService, TestService>();
+builder.Services.AddSingleton<IHostedService, DinningHallService>();
 
 var app = builder.Build();
 
@@ -26,8 +25,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
