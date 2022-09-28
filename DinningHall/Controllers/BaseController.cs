@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DinningHall.Dtos;
+using DinningHall.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DinningHall.Controllers
 {
@@ -7,16 +9,19 @@ namespace DinningHall.Controllers
     public class BaseController : ControllerBase
     {
         private readonly ILogger<BaseController> _logger;
+        private readonly IDinningHallService _dinningHallService;
 
-        public BaseController(ILogger<BaseController> logger)
+        public BaseController(ILogger<BaseController> logger, IDinningHallService dinningHallService)
         {
             _logger = logger;
+            _dinningHallService = dinningHallService;
         }
 
         [HttpPost("distribution")]
-        public IActionResult DistributeOrder()
+        public IActionResult DistributeOrder(CompletedOrderDto completedOrderDto)
         {
-            _logger.LogInformation("Order will be soon distributed");
+            _logger.LogInformation($"Dinning Hall: Recieved order with id: {completedOrderDto.OrderId}");
+            _dinningHallService.DistributeOrder(completedOrderDto);
 
             return Ok();
         }
