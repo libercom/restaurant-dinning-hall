@@ -1,3 +1,4 @@
+using DinningHall.Data;
 using DinningHall.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IHostedService, DinningHallService>();
+builder.Services.AddSingleton<Menu>();
+builder.Services.AddSingleton<IDinningHallService, DinningHallService>();
 
 var app = builder.Build();
 
@@ -29,5 +31,11 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var serviceScope = app.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+    var _ = services.GetRequiredService<IDinningHallService>();
+}
 
 app.Run();
