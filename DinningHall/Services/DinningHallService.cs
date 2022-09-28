@@ -1,4 +1,4 @@
-﻿using DinningHall.Data;
+using DinningHall.Data;
 using DinningHall.Dtos;
 using DinningHall.Models;
 using Newtonsoft.Json;
